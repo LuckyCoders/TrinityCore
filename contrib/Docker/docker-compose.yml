@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mariadb:10.11
+    container_name: trinitycore-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: auth
+      MYSQL_USER: trinity
+      MYSQL_PASSWORD: trinity
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - trinitycore-network
+
+  bnetserver:
+    image: trinitycore/trinitycore:3.3.5
+    container_name: trinitycore-bnetserver
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./configs:/home/circleci/project/bin/check_install/etc
+      - ./logs:/home/circleci/logs
+    ports:
+      - "1119:1119"
+      - "8081:8081"
+    entrypoint: ["bnetserver"]
+    networks:
+      - trinitycore-network
+    restart: unless-stopped
+
+  worldserver:
+    image: trinitycore/trinitycore:3.3.5
+    container_name: trinitycore-worldserver
+    depends_on:
+      mysql:
+        condition: service_healthy
+      bnetserver:
+        condition: service_started
+    volumes:
+      - ./configs:/home/circleci/project/bin/check_install/etc
+      - ./data:/trinity/data
+      - ./logs:/home/circleci/logs
+    ports:
+      - "8085:8085"
+      - "8086:8086"
+    entrypoint: ["worldserver"]
+    networks:
+      - trinitycore-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  trinitycore-network:
+    driver: bridge
