@@ -1,20 +1,20 @@
 # TrinityCore Project TODO
 
-This document outlines improvements needed to make TrinityCore more accessible and easier to use for beginners, contributors, and players.
+This document lists things we want to improve to make TrinityCore easier to use for beginners, developers who want to help, and players who want to run their own server.
 
 ## Priority Legend
 
-- 🔴 **Critical** - Blocks basic functionality, must be fixed
-- 🟠 **High** - Significantly improves user experience
-- 🟡 **Medium** - Nice to have, improves workflow
-- 🟢 **Low** - Future enhancement, not urgent
+- 🔴 **Critical** - Very important, must be done first
+- 🟠 **High** - Important, will make things much better
+- 🟡 **Medium** - Would be nice to have
+- 🟢 **Low** - Maybe do this later
 
 ## Status Legend
 
-- ⬜ **Not Started** - Task not yet begun
-- 🟦 **In Progress** - Currently being worked on
-- ✅ **Completed** - Task finished
-- ⏸️ **On Hold** - Temporarily paused
+- ⬜ **Not Started** - Not started yet
+- 🟦 **In Progress** - Someone is working on it now
+- ✅ **Completed** - Finished!
+- ⏸️ **On Hold** - Paused for now
 
 ---
 

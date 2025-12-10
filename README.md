@@ -18,14 +18,14 @@
 
 ## Introduction
 
-TrinityCore is an open-source **MMORPG Framework** written primarily in C++. It is derived from [MaNGOS](http://getmangos.com), the *Massive Network Game Object Server*, and has been extensively improved and optimized over time.
+TrinityCore is an open-source game server that lets you run your own World of Warcraft server. It is written in C++ programming language. It started from [MaNGOS](http://getmangos.com) (another open-source project) and has been improved a lot over time.
 
 ### What TrinityCore Does
 
-- Runs World of Warcraft private servers
-- Provides complete game server functionality (authentication, world simulation, database management)
-- Supports multiple game versions (3.3.5, Cataclysm Classic, and more)
-- Completely open source with active community development
+- Lets you run your own World of Warcraft server
+- Handles everything needed: player login, game world, and data storage
+- Works with different game versions (3.3.5, Cataclysm Classic, and newer versions)
+- Completely free and open source - anyone can use and improve it
 
 ### Project History
 

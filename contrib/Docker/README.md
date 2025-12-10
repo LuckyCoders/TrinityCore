@@ -1,8 +1,8 @@
 # Docker
 
-The Circle CI Linux pch job uses the Dockerfile contained in the same folder as this README to create an image with the binaries built for Linux, and stores that in the job artifacts. For the 3.3.5 and master branches, it also pushes the images to https://hub.docker.com/r/trinitycore/trinitycore .
+We use Docker to create ready-to-use server files. For the 3.3.5 and master branches, we also publish these files to https://hub.docker.com/r/trinitycore/trinitycore so you can download them easily.
 
-The instructions below expect a basic knowledge of how to configure TrinityCore and how to use Docker.
+The instructions below assume you know a little about TrinityCore configuration and Docker. If you're new, start with the Quick Start guide instead.
 
 ## Quick Start (Recommended)
 

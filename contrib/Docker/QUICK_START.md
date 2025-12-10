@@ -1,6 +1,6 @@
 # TrinityCore 3.3.5 - One Command Quick Start
 
-This guide will help you get TrinityCore 3.3.5 running with Docker in minutes using a single command.
+This guide will help you get TrinityCore 3.3.5 running with Docker in just a few minutes using one simple command.
 
 ## Prerequisites
 
@@ -69,7 +69,7 @@ docker-compose logs -f bnetserver
 
 ### 3. Import TDB (Trinity Database)
 
-**Important**: The world will be empty without TDB. You need to import game content.
+**Important**: Without TDB, your game world will be empty. You need to import the game content database.
 
 **Step 1: Import base world database structure** (if not already done):
 ```bash
