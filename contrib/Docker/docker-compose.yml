@@ -39,6 +39,8 @@ services:
     networks:
       - trinitycore-network
     restart: unless-stopped
+    environment:
+      - TZ=UTC
 
   worldserver:
     image: trinitycore/trinitycore:3.3.5
@@ -59,6 +61,8 @@ services:
     networks:
       - trinitycore-network
     restart: unless-stopped
+    environment:
+      - TZ=UTC
 
 volumes:
   mysql_data:

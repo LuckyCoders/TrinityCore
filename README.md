@@ -126,7 +126,10 @@ TrinityCore requires **4 databases**:
 3. **world** - Game content (requires TDB import)
 4. **hotfixes** - Hotfix data (optional for some versions)
 
-**Important**: Import base SQL files from `sql/base/` before importing TDB updates.
+**Important**: 
+- Import base SQL files from `sql/base/` before importing TDB
+- For world database: Import `sql/base/dev/world_database.sql` structure first, then import TDB
+- TDB (Trinity Database) must be downloaded separately from [releases](https://github.com/TrinityCore/TrinityCore/releases)
 
 ## Common Problems and Solutions
 
@@ -200,12 +203,18 @@ TrinityCore requires **4 databases**:
 - Server runs but world is empty
 
 **Solutions**:
-1. **Download TDB** from [TrinityCore TDB releases](https://github.com/TrinityCore/TrinityCore/releases)
-2. **Import base world database** first: `sql/base/dev/world_database.sql`
-3. **Import TDB file** matching your core version
-4. **Apply updates** from `sql/updates/world/` directory
+1. **Import base world database structure** first: `sql/base/dev/world_database.sql`
+2. **Download TDB** from [TrinityCore Releases](https://github.com/TrinityCore/TrinityCore/releases)
+   - Look for files like `TDB_full_world_335.63_*.sql` for 3.3.5 branch
+   - Or `TDB_full_world_*.sql` for master branch
+3. **Import TDB file** matching your core version and branch
+4. **Apply updates** from `sql/updates/world/[branch]/` directory (if any)
 
-**Important**: TDB is separate from core repository. You must download and import it manually.
+**Important**: 
+- TDB is **separate** from core repository - you must download it manually
+- TDB contains all game content (NPCs, quests, items, etc.)
+- Without TDB, the world will be empty
+- Always use TDB version matching your core branch
 
 ### 🔴 Problem 5: Port Already in Use
 

@@ -71,10 +71,18 @@ docker-compose logs -f bnetserver
 
 **Important**: The world will be empty without TDB. You need to import game content.
 
-1. **Download TDB** from [TrinityCore Releases](https://github.com/TrinityCore/TrinityCore/releases)
-   - Look for files like `TDB_full_world_335.63_*.sql`
+**Step 1: Import base world database structure** (if not already done):
+```bash
+cd contrib/Docker
+docker exec -i trinitycore-mysql mysql -uroot -proot world < ../../sql/base/dev/world_database.sql
+```
 
-2. **Import TDB**:
+**Step 2: Download TDB** from [TrinityCore Releases](https://github.com/TrinityCore/TrinityCore/releases)
+   - For 3.3.5 branch: Look for files like `TDB_full_world_335.63_*.sql`
+   - For master branch: Look for `TDB_full_world_*.sql` matching latest version
+   - **Note**: TDB is separate from core repository and must be downloaded manually
+
+**Step 3: Import TDB**:
    ```bash
    cd contrib/Docker
    docker exec -i trinitycore-mysql mysql -uroot -proot world < /path/to/TDB_full_world_335.63_*.sql
@@ -83,6 +91,12 @@ docker-compose logs -f bnetserver
    Or if you downloaded it to the Docker directory:
    ```bash
    docker exec -i trinitycore-mysql mysql -uroot -proot world < TDB_full_world_335.63_*.sql
+   ```
+
+**Step 4: Apply database updates** (if any):
+   ```bash
+   # Check for updates in sql/updates/world/3.3.5/ directory
+   # Apply them in order if they exist
    ```
 
 ### 4. Extract Game Client Data

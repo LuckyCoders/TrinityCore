@@ -159,9 +159,11 @@ if [ -f "$PROJECT_ROOT/sql/base/characters_database.sql" ]; then
     docker exec -i trinitycore-mysql mysql -uroot -proot characters < "$PROJECT_ROOT/sql/base/characters_database.sql" || echo -e "${YELLOW}Note: Characters database may already be imported${NC}"
 fi
 
+# Note: world_database.sql in sql/base/dev/ is just structure, TDB needs to be imported separately
+# We don't import it here as it requires TDB file which user must download separately
 if [ -f "$PROJECT_ROOT/sql/base/dev/world_database.sql" ]; then
-    echo -e "${YELLOW}Importing world database structure...${NC}"
-    docker exec -i trinitycore-mysql mysql -uroot -proot world < "$PROJECT_ROOT/sql/base/dev/world_database.sql" || echo -e "${YELLOW}Note: World database structure may already be imported${NC}"
+    echo -e "${YELLOW}Note: World database structure file found, but TDB import is required separately${NC}"
+    echo -e "${YELLOW}      Import TDB after setup completes (see QUICK_START.md)${NC}"
 fi
 
 # Start bnetserver and worldserver

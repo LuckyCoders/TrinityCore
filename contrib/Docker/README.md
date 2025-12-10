@@ -4,6 +4,27 @@ The Circle CI Linux pch job uses the Dockerfile contained in the same folder as 
 
 The instructions below expect a basic knowledge of how to configure TrinityCore and how to use Docker.
 
+## Quick Start (Recommended)
+
+For the easiest setup, use our **one-command quick start script**:
+
+```bash
+./contrib/Docker/quick-start-335.sh
+```
+
+Or use **Docker Compose**:
+
+```bash
+cd contrib/Docker
+docker-compose up -d
+```
+
+See [QUICK_START.md](QUICK_START.md) for detailed instructions.
+
+## Manual Setup
+
+The following instructions are for manual Docker setup when MySQL runs on the host machine or you need custom configuration.
+
 ## Load the Docker image
 For the 3.3.5 and master branches, it's possible to pull the images from DockerHub.
 - For latest 3.3.5, use the following command:
@@ -31,8 +52,17 @@ For Pull Requests or branches other than 3.3.5 or master, follow the steps below
     ```
 
 ## Start bnetserver/worldserver from Docker
+
+### Option 1: Using Docker Compose (Recommended)
+
+See [docker-compose.yml](docker-compose.yml) and [QUICK_START.md](QUICK_START.md) for Docker Compose setup.
+
+### Option 2: Manual Docker Run (MySQL on Host)
+
 1. Copy the .conf files from the TrinityCore GitHub repository to a local folder which will be passed on as a mapped volume to Docker.
-1. Set the MySQL host in the .conf files to use the UNIX socket of MySQL, i.e.: `".;/var/run/mysqld/mysqld.sock;username;password;database"`
+1. Set the MySQL host in the .conf files:
+   - **For MySQL on host**: Use UNIX socket: `".;/var/run/mysqld/mysqld.sock;username;password;database"`
+   - **For MySQL in Docker network**: Use hostname: `"mysql;3306;username;password;database"`
 1. Set the "DataDir" config in worldserver.conf to `"/trinity/data"`
 1. Start bnetserver or worldserver as desired, mapping the required volumes:
 
@@ -71,10 +101,31 @@ docker cp "container name":/home/circleci/name.log name.log
 
 For more instructions, please check the official docker documentation.
 
+## Database Setup
+
+Before starting the servers, you need to:
+
+1. **Create databases**: `auth`, `characters`, `world`, `hotfixes`
+2. **Import base SQL files** from `sql/base/`:
+   - `sql/base/auth_database.sql`
+   - `sql/base/characters_database.sql`
+   - `sql/base/dev/world_database.sql` (structure only)
+3. **Download and import TDB** (Trinity Database):
+   - Download from [TrinityCore Releases](https://github.com/TrinityCore/TrinityCore/releases)
+   - Import TDB file matching your branch (e.g., `TDB_full_world_335.63_*.sql` for 3.3.5)
+   - **Important**: TDB is separate from core repository and must be downloaded manually
+
 ## Limitations:
 
-- Database connection: The instructions provided expect MySQL to run on the host machine. Change `docker run` parameters and .conf settings to fit your scenario.
-- To import TDB using the autoupdater:
-  1. Download the TDB sql file from GitHub.
-  1. Map it with `--volume=/path/to/TDB_full_name.sql:/home/circleci/TDB_full_name.sql` added to the commands specified in the main steps above.
-  1. Run the container.
+- **Database connection**: 
+  - Manual instructions expect MySQL to run on the host machine using UNIX socket
+  - For Docker Compose setup, MySQL runs in a container and uses TCP connection via service name
+  - Change `docker run` parameters and .conf settings to fit your scenario
+- **TDB import**: 
+  - TDB must be downloaded separately from GitHub releases
+  - Import TDB after importing base database structure
+  - To import TDB using the autoupdater:
+    1. Download the TDB sql file from GitHub.
+    1. Map it with `--volume=/path/to/TDB_full_name.sql:/home/circleci/TDB_full_name.sql` added to the commands specified in the main steps above.
+    1. Run the container.
+- **Game data files**: Maps, vmaps, and DBC files must be extracted from game client and placed in DataDir
